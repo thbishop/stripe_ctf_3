@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -eu
+
+server_path="$(dirname "$0")/../server"
+
+if [ "$1" = "--master" ]; then
+  echo "$0: Received master, starting our server"
+  set -x
+  exec "$server_path"
+else
+  echo "$0: Received a non-master, nooping!"
+fi

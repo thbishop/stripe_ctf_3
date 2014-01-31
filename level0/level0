@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+# Our test cases will always use the same dictionary file (with SHA1
+# 6b898d7c48630be05b72b3ae07c5be6617f90d8e). Running `test/harness`
+# will automatically download this dictionary for you if you don't
+# have it already.
+
+path = ARGV.length > 0 ? ARGV[0] : '/usr/share/dict/words'
+entries = File.read(path).split("\n")
+
+contents = $stdin.read
+
+hash = Hash.new
+entries.each_with_index { |item, index| hash[item] = index }
+
+output = contents.gsub(/[^ \n]+/) do |word|
+  hash.has_key?(word.downcase) ?  word : "<#{word}>"
+end
+
+print output
